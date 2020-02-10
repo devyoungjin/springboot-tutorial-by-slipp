@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.devandy.domain.User;
+
 @Controller
 public class userController {
 	
@@ -23,8 +25,8 @@ public class userController {
 	}
 	
 	@PostMapping("/create")
-	public String create(String userEmail, String userName, String userPassword) {
-		System.out.println("email : "+userEmail+"\nname : "+userName+"\npassword : "+userPassword);
+	public String create(User user) {
+		System.out.println(user);
 		return "redirect:/";
 	}
 
