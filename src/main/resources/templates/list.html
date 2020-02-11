@@ -1,68 +1,103 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DevAndy Web Programming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-fixed-top header">
+    <div class="col-md-12">
+        <div class="navbar-header">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+            <a href="/" class="navbar-brand">DevAndy</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
 
-    <title>SpringBoot</title>
-    
-    <style>
-    	.container {
-    		margin-top: 20px;
-    	}
-   	</style>
-  </head>
-  <body>
-  
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="/">DevAndy</a>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	    <ul class="navbar-nav">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/signup">Signup</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/login">Login</a>
-	      </li>
-	    </ul>
-	  </div>
-	</nav>
-	
-	<div class="container">
-		<h2>User List</h2>
-		<br>
-		<table class="table table-condensed">
-			<thead>
-				<tr>
-					<th>사용자 이메일</th>
-					<th>이름</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{#users}}
-				<tr>
-					<td>{{userEmail}}</td>
-					<td>{{userName}}</td>
-				</tr>
-				{{/users}}
-			</tbody>
-		</table>
-	</div>
-	
-  <!-- jQuery -->
-  <script src="webjars/jquery/3.0.0/jquery.js" ></script>
-  <!-- Bootstrap JS -->
-  <script src="webjars/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-  
-  </body>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse1">
+            <form class="navbar-form pull-left">
+                <div class="input-group" style="max-width:470px;">
+                    <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-bell"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://slipp.net" target="_blank">DevAndy</a></li>
+                        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    </ul>
+                </li>
+                <li><a href="../user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="navbar navbar-default" id="subnav">
+    <div class="col-md-12">
+        <div class="navbar-header">
+            <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
+            <ul class="nav dropdown-menu">
+                <li><a href="../user/profile.html"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
+            </ul>
+            
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
+            	<span class="sr-only">Toggle navigation</span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            </button>            
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse2">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">Posts</a></li>
+                <li><a href="/login" role="button">로그인</a></li>
+                <li><a href="/signup" role="button">회원가입</a></li>
+                <li><a href="/logout" role="button">로그아웃</a></li>
+                <li><a href="/edituser" role="button">개인정보수정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="main">
+   <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default">
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                    <th>#</th> <th>사용자 아이디</th> <th>이름</th> <th>이메일</th><th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <th scope="row">1</th> <td>javajigi</td> <td>자바지기</td> <td>javajigi@sample.net</td><td><a href="#" class="btn btn-success" role="button">수정</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th> <td>slipp</td> <td>슬립</td> <td>slipp@sample.net</td><td><a href="#" class="btn btn-success" role="button">수정</a></td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+
+<!-- script references -->
+<script src="../js/jquery-2.2.0.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/scripts.js"></script>
+	</body>
 </html>
