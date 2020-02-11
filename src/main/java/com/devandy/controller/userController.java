@@ -1,6 +1,10 @@
 package com.devandy.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,10 +28,19 @@ public class userController {
 		return "signup";
 	}
 	
+	private List<User> users = new ArrayList<User>();
+	
 	@PostMapping("/create")
 	public String create(User user) {
 		System.out.println(user);
-		return "redirect:/";
+		users.add(user);
+		return "redirect:/list";
+	}
+	
+	@GetMapping("/list")
+	public String userList(Model model) {
+		model.addAttribute("users", users);
+		return "list";
 	}
 
 }
