@@ -1,5 +1,17 @@
-{"properties": [{
-  "name": "handlebars.cache",
-  "type": "java.lang.String",
-  "description": "A description for 'handlebars.cache'"
-}]}
+{"properties": [
+  {
+    "name": "handlebars.cache",
+    "type": "java.lang.String",
+    "description": "A description for 'handlebars.cache'"
+  },
+  {
+    "name": "myname",
+    "type": "java.lang.String",
+    "description": "A description for 'myname'"
+  },
+  {
+    "name": "myprinter",
+    "type": "java.lang.String",
+    "description": "A description for 'myprinter'"
+  }
+]}
