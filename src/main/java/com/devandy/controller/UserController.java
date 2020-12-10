@@ -17,27 +17,26 @@ public class UserController {
 	
 	private List<User> users = new ArrayList<User>();
 	
-	@GetMapping("/create")
+	@GetMapping("/signup")
 	public String signup() {
-		return "create";
+		return "/user/create";
 	}
 	
 	@PostMapping("/create")
 	public String create(User user) {
-		System.out.println(user);
-		users.add(user);
-		return "redirect:/list";
+		System.out.println(user.toString());
+		return "/user/list";
 	}
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "/user/login";
 	}
 	
 	@GetMapping("/list")
 	public String userList(Model model) {
 		model.addAttribute("users", users);
-		return "list";
+		return "/user/list";
 	}
 
 }
