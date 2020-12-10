@@ -7,34 +7,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devandy.domain.User;
 
 @Controller
-public class userController {
+@RequestMapping("/user")
+public class UserController {
 	
-	@GetMapping("/")
-	public String main() {
-		return "index";
-	}
+	private List<User> users = new ArrayList<User>();
 	
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
-	
-	@GetMapping("/signup")
+	@GetMapping("/create")
 	public String signup() {
 		return "signup";
 	}
-	
-	private List<User> users = new ArrayList<User>();
 	
 	@PostMapping("/create")
 	public String create(User user) {
 		System.out.println(user);
 		users.add(user);
 		return "redirect:/list";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "login";
 	}
 	
 	@GetMapping("/list")
