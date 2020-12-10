@@ -19,7 +19,7 @@ public class UserController {
 	
 	@GetMapping("/create")
 	public String signup() {
-		return "signup";
+		return "create";
 	}
 	
 	@PostMapping("/create")
