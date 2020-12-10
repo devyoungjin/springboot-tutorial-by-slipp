@@ -18,6 +18,9 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	@Column(nullable=false, length=10)
+	private String userId;
+	
 	@Column
 	private String password;
 	
