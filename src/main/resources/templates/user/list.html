@@ -18,18 +18,14 @@
                 </tr>
               </thead>
               <tbody>
+              	{{#users}}
                 <tr>
-                    <th scope="row">1</th> 
-                    <td>자바지기</td> 
-                    <td>javajigi@sample.net</td>
+                    <th scope="row">{{userId}}</th> 
+                    <td>{{name}}</td> 
+                    <td>{{email}}</td>
                     <td><a href="/user/update" class="btn btn-success" role="button">수정</a></td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th> 
-                    <td>슬립</td> 
-                    <td>slipp@sample.net</td>
-                    <td><a href="/user/update" class="btn btn-success" role="button">수정</a></td>
-                </tr>
+                {{/users}}
               </tbody>
           </table>
         </div>
