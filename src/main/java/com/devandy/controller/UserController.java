@@ -36,15 +36,15 @@ public class UserController {
 	}
 	
 	@PostMapping("/join")
-	public String join(String userId, String password, HttpSession session) {
-		User user = userRepository.findByUserId(userId);
+	public String join(String email, String password, HttpSession session) {
+		User user = userRepository.findByEmail(email);
 		
 		if(user==null) {
 			System.out.println("User Id doesn't exist");
-			return "redirect:/login";
+			return "redirect:/user/login";
 		} else if(!password.equals(user.getPassword())) {
 			System.out.println("Wrong password");
-			return "redirect:/login";
+			return "redirect:/user/login";
 		} else {
 			session.setAttribute("sessionedUser", user);
 			System.out.println("Hello, "+user.getName());
