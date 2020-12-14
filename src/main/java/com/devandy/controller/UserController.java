@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devandy.domain.User;
@@ -30,8 +32,14 @@ public class UserController {
 		return "redirect:/user/list";
 	}
 	
+	@GetMapping("/list")
+	public String userList(Model model) {
+		model.addAttribute("users", userRepository.findAll());
+		return "/user/list";
+	}
+	
 	@GetMapping("/login")
-	public String login() {
+	public String loginForm() {
 		return "/user/login";
 	}
 	
@@ -53,16 +61,39 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/update/{id}")
+	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
+
+		User sessionedUser = (User)session.getAttribute("sessionedUser");
+		
+		if(sessionedUser==null) {
+			System.out.println("You must be logged in.");
+			return "redirect:/user/login";
+		} else if(!id.equals(sessionedUser.getId())){
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+		} else {
+			model.addAttribute("user", sessionedUser);
+			return "/user/update";
+		}
+	}
+	
+	@PostMapping("/{id}/update")
+	public String update(@PathVariable Long id, User updatedUser) {
+		
+		User user = userRepository.findById(id).get();
+		System.out.println("Before update : "+user.toString());
+		
+		user.update(updatedUser);
+		userRepository.save(user);
+		System.out.println("After update : "+user.toString());
+		
+		return "redirect:/user/list";
+	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("sessionedUser");
 		return "redirect:/";
-	}
-	
-	@GetMapping("/list")
-	public String userList(Model model) {
-		model.addAttribute("users", userRepository.findAll());
-		return "/user/list";
 	}
 
 }
