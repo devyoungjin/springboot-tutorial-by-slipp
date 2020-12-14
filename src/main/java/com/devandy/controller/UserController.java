@@ -1,7 +1,6 @@
 package com.devandy.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +33,24 @@ public class UserController {
 	@GetMapping("/login")
 	public String login() {
 		return "/user/login";
+	}
+	
+	@PostMapping("/join")
+	public String join(String userId, String password, HttpSession session) {
+		User user = userRepository.findByUserId(userId);
+		
+		if(user==null) {
+			System.out.println("User Id doesn't exist");
+			return "redirect:/login";
+		} else if(!password.equals(user.getPassword())) {
+			System.out.println("Wrong password");
+			return "redirect:/login";
+		} else {
+			session.setAttribute("sessionedUser", user);
+			System.out.println("Hello, "+user.getName());
+		}
+		
+		return "redirect:/";
 	}
 	
 	@GetMapping("/list")
