@@ -21,8 +21,8 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@GetMapping("/signup")
-	public String signup() {
+	@GetMapping("/createForm")
+	public String createForm() {
 		return "/user/create";
 	}
 	
@@ -38,12 +38,12 @@ public class UserController {
 		return "/user/list";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/loginForm")
 	public String loginForm() {
 		return "/user/login";
 	}
 	
-	@PostMapping("/join")
+	@PostMapping("/login")
 	public String join(String email, String password, HttpSession session) {
 		User user = userRepository.findByEmail(email);
 		
