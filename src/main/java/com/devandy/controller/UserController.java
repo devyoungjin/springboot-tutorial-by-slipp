@@ -40,14 +40,14 @@ public class UserController {
 		User user = userRepository.findByEmail(email);
 		
 		if(user==null) {
-			System.out.println("User Id doesn't exist");
+			System.out.println("Login Failed : User Id doesn't exist");
 			return "redirect:/user/login";
 		} else if(!password.equals(user.getPassword())) {
-			System.out.println("Wrong password");
+			System.out.println("Login Failed : Wrong password");
 			return "redirect:/user/login";
 		} else {
 			session.setAttribute("sessionedUser", user);
-			System.out.println("Hello, "+user.getName());
+			System.out.println("Login Success : Hello, "+user.getName());
 		}
 		
 		return "redirect:/";
