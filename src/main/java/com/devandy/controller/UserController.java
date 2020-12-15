@@ -83,6 +83,10 @@ public class UserController {
 		User user = userRepository.findById(id).get();
 		System.out.println("Before update : "+user.toString());
 		
+		// 비밀번호 없으면 이전 비밀번호 그대로 사용
+		if(updatedUser.getPassword()==null || updatedUser.getPassword()=="") {
+			updatedUser.setPassword(user.getPassword());
+		}
 		user.update(updatedUser);
 		userRepository.save(user);
 		System.out.println("After update : "+user.toString());
