@@ -10,11 +10,17 @@
           <form name="question" method="post" action="/user/create">
           	  <div class="form-group">
                   <label for="email">이메일</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                  <input type="email" class="form-control" id="email" name="email" 
+                  	placeholder="Email" onblur="emailChk()">
               </div>
               <div class="form-group">
                   <label for="password">비밀번호</label>
                   <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                  <label for="password">비밀번호 확인</label>
+                  <input type="password" class="form-control" id="passwordConfirm" name="password" 
+                    placeholder="Confirm Password" onblur="passwordChk()">
               </div>
               <div class="form-group">
                   <label for="name">이름</label>
@@ -26,5 +32,49 @@
         </div>
     </div>
 </div>
+
+<script>
+	var email = document.getElementById('email').val();
+	var password = document.getElementById('password').val();
+	var passwordConfirm = document.getElementById('passwordConfirm').val();
+	
+	// 이메일 체크
+	function emailChk(){
+        var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        
+        if(email.match(emailRegExp)!=null){
+            $.ajax({
+                type: 'POST',
+                url: '/user/emailChk',
+                data: email,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                success: function(data){
+                    if(data===1){
+                        alert('가입가능한 이메일입니다.');
+                    } else if(data===0){
+                        alert('이미 가입된 이메일입니다. 다른 이메일로 시도해주세요.');
+                        document.getElementById('email').focus();
+                    }
+                },
+                error: function(error){
+                    alert("이메일 중복함수 에러 : "+error);
+                }
+            });
+        } else {
+            alert('이메일 형식이 올바르지 않습니다.');
+        }
+    }
+
+	// 비밀번호 체크
+	function passwordChk(){
+        if(password!=passwordConfirm){
+            alert("비밀번호가 일치하지 않습니다.");
+        } else {
+            alert("비밀번호가 일치합니다.");
+        }
+    }
+	
+</script>
 
 {{> /layout/footer}}

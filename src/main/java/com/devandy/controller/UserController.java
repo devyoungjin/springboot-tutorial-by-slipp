@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.devandy.domain.User;
 import com.devandy.domain.UserRepository;
+import com.devandy.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -20,6 +22,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService UserService;
 	
 	@GetMapping("/createForm")
 	public String createForm() {
@@ -29,7 +34,22 @@ public class UserController {
 	@PostMapping("/create")
 	public String create(User user) {
 		userRepository.save(user);
+		System.out.println(user);
 		return "redirect:/user/list";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/emailChk")
+	public int emailCheck(@RequestBody String email) {
+		int result = 0;
+		
+		if(UserService.findByEmail(email)!=null) {
+			result = 1;
+		} else {
+			result = 0;
+		}
+		
+		return result;
 	}
 	
 	@GetMapping("/list")
