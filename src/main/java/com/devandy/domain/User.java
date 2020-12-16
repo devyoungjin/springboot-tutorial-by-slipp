@@ -32,7 +32,7 @@ public class User {
 		return this.id.equals(id);
 	}
 	
-	public boolean matchPassword(Long password) {
+	public boolean matchPassword(String password) {
 		return this.password.equals(password);
 	}
 	

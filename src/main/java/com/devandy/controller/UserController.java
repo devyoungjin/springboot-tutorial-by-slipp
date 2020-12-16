@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.devandy.domain.User;
 import com.devandy.domain.UserRepository;
 import com.devandy.service.UserService;
+import com.devandy.util.HttpSessionUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -70,34 +71,33 @@ public class UserController {
 		if(user==null) {
 			System.out.println("Login Failed : User Id doesn't exist");
 			return "redirect:/user/loginForm";
-		} else if(!password.equals(user.getPassword())) {
+		} else if(!user.matchPassword(password)) {
 			System.out.println("Login Failed : Wrong password");
 			return "redirect:/user/loginForm";
 		} else {
-			session.setAttribute("sessionedUser", user);
+			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
 			System.out.println("Login Success : Hello, "+user.getName());
 		}
 		
 		return "redirect:/";
 	}
 	
-	@GetMapping("/update/{id}")
+	@GetMapping("/updateForm/{id}")
 	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
 
-		User sessionedUser = (User)session.getAttribute("sessionedUser");
-		
-		if(sessionedUser==null) {
+		if(!HttpSessionUtils.isLoginUser(session)) {
 			System.out.println("You must be logged in.");
-			return "redirect:/user/login";
-		} else if(!id.equals(sessionedUser.getId())){
-			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+			return "redirect:/user/loginForm";
+		} else if(!HttpSessionUtils.getUserFromSession(session).matchId(id)){
+			System.out.println("자신의 정보만 수정할 수 있습니다.");
+			return "redirect:/user/list";
 		} else {
-			model.addAttribute("user", sessionedUser);
+			model.addAttribute("user", HttpSessionUtils.getUserFromSession(session));
 			return "/user/update";
 		}
 	}
 	
-	@PostMapping("/{id}/update")
+	@PostMapping("/update/{id}")
 	public String update(@PathVariable Long id, User updatedUser) {
 		
 		User user = userRepository.findById(id).get();
@@ -116,7 +116,7 @@ public class UserController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("sessionedUser");
+		session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
 		return "redirect:/";
 	}
 
