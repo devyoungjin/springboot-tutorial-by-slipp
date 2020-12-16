@@ -69,10 +69,10 @@ public class UserController {
 		
 		if(user==null) {
 			System.out.println("Login Failed : User Id doesn't exist");
-			return "redirect:/user/login";
+			return "redirect:/user/loginForm";
 		} else if(!password.equals(user.getPassword())) {
 			System.out.println("Login Failed : Wrong password");
-			return "redirect:/user/login";
+			return "redirect:/user/loginForm";
 		} else {
 			session.setAttribute("sessionedUser", user);
 			System.out.println("Login Success : Hello, "+user.getName());
