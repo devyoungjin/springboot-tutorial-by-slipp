@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.devandy.domain.User;
 import com.devandy.domain.UserRepository;
-import com.devandy.service.UserService;
 import com.devandy.util.HttpSessionUtils;
 
 @Controller
@@ -23,9 +22,6 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private UserService UserService;
 	
 	@GetMapping("/createForm")
 	public String createForm() {
@@ -44,7 +40,7 @@ public class UserController {
 	public int emailCheck(@RequestBody String email) {
 		int result = 0;
 		
-		if(UserService.findByEmail(email)==null) {
+		if(userRepository.findByEmail(email)==null) {
 			result = 1;
 		} else {
 			result = 0;
@@ -84,7 +80,7 @@ public class UserController {
 	
 	@GetMapping("/updateForm/{id}")
 	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
-
+		
 		if(!HttpSessionUtils.isLoginUser(session)) {
 			System.out.println("You must be logged in.");
 			return "redirect:/user/loginForm";

@@ -37,10 +37,10 @@ public class User {
 	}
 	
 	public void update(User updateUser) {
-		this.email = updateUser.email;
-		this.name = updateUser.name;
-		if(updateUser.password!=null || updateUser.password.equals("")) {
-			this.password = updateUser.password;
+		this.email = updateUser.getEmail();
+		this.name = updateUser.getName();
+		if(updateUser.getPassword()!=null || updateUser.getPassword().equals("")) {
+			this.password = updateUser.getPassword();
 		}
 	}
 	
