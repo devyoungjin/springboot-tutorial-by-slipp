@@ -49,9 +49,9 @@
             </button>            
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" id="navbar-list">
             	{{#sessionedUser}}
-                <li class="active"><a href="/">Posts</a></li>
+                <li><a href="/qna/ask">Posts</a></li>
                 {{/sessionedUser}}
                 {{^sessionedUser}}
                 <li><a href="/user/loginForm" role="button">로그인</a></li>
@@ -65,3 +65,20 @@
         </div>
     </div>
 </div>
+
+<script>
+ var navbarList = document.getElementById("navbar-list").childNodes;
+ 
+ navbarList.find("a").click(function(){
+	navbarList.addClass("active"); 
+ });
+ 
+ function addClass(element, className){
+	 element.className += " " + className;
+ }
+ 
+ function removeClass(element, className) {
+	 element.className = element.className.replace(className," ").trim();
+ }
+ 
+</script>
