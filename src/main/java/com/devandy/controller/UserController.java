@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.devandy.domain.User;
 import com.devandy.domain.UserRepository;
+import com.devandy.service.UserService;
 import com.devandy.util.HttpSessionUtils;
 
 @Controller
@@ -23,6 +24,9 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private UserService userService;
+	
 	@GetMapping("/createForm")
 	public String createForm() {
 		return "/user/create";
@@ -30,8 +34,7 @@ public class UserController {
 	
 	@PostMapping("/create")
 	public String create(User user) {
-		userRepository.save(user);
-		System.out.println(user);
+		userService.saveUserAfterCreated(user);
 		return "redirect:/user/list";
 	}
 	
@@ -64,49 +67,28 @@ public class UserController {
 	public String join(String email, String password, HttpSession session) {
 		User user = userRepository.findByEmail(email);
 		
-		if(user==null) {
-			System.out.println("Login Failed : User Id doesn't exist");
-			return "redirect:/user/loginForm";
-		} else if(!user.matchPassword(password)) {
-			System.out.println("Login Failed : Wrong password");
-			return "redirect:/user/loginForm";
-		} else {
+		if(userService.validationLogin(email, password)) {
 			session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
-			System.out.println("Login Success : Hello, "+user.getName());
+			return "redirect:/";
+		} else {
+			return "redirect:/user/loginForm";
 		}
-		
-		return "redirect:/";
 	}
 	
 	@GetMapping("/updateForm/{id}")
 	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
 		
-		if(!HttpSessionUtils.isLoginUser(session)) {
-			System.out.println("You must be logged in.");
-			return "redirect:/user/loginForm";
-		} else if(!HttpSessionUtils.getUserFromSession(session).matchId(id)){
-			System.out.println("자신의 정보만 수정할 수 있습니다.");
-			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
-		} else {
+		if(userService.checkAuthorizationForUpdate(session, id)) {
 			model.addAttribute("user", HttpSessionUtils.getUserFromSession(session));
-			return "/user/update";
+			return "user/update";
+		} else {
+			return "redirect:/user/loginForm";
 		}
 	}
 	
 	@PostMapping("/update/{id}")
 	public String update(@PathVariable Long id, User updatedUser) {
-		
-		User user = userRepository.findById(id).get();
-		System.out.println("Before update : "+user.toString());
-		
-		// 비밀번호 없으면 이전 비밀번호 그대로 사용
-		if(updatedUser.getPassword()==null || updatedUser.getPassword()=="") {
-			updatedUser.setPassword(user.getPassword());
-		}
-		user.update(updatedUser);
-		userRepository.save(user);
-		System.out.println("After update : "+user.toString());
-		
+		userService.saveUserAfterUpdate(updatedUser);
 		return "redirect:/user/list";
 	}
 	
