@@ -23,6 +23,8 @@ public class Question {
 	
 	private String author;
 	
+	private String createdDate;
+	
 	private String title;
 	
 	private String contents;

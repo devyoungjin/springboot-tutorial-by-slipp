@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.devandy.domain.QnaRepository;
+import com.devandy.domain.Question;
 import com.devandy.service.QnaService;
 import com.devandy.util.HttpSessionUtils;
 
@@ -19,9 +21,13 @@ public class QnaController {
 	@Autowired
 	private QnaService qnaService;
 	
+	@Autowired
+	private QnaRepository qnaRepository;
+	
 	@GetMapping("/list")
-	public String list() {
-		return "/qna/list";
+	public String list(Model model) {
+		model.addAttribute("questions", qnaRepository.findAll());
+		return "/";
 	}
 	
 	@GetMapping("/ask")
@@ -46,6 +52,11 @@ public class QnaController {
 		qnaService.postQuestion(session, title, contents);
 		
 		return "redirect:/qna/list";
+	}
+	
+	@GetMapping("/question")
+	public String questionPage() {
+		return "/qna/question";
 	}
 	
 }

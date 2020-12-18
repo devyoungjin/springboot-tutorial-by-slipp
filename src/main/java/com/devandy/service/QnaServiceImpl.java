@@ -1,5 +1,8 @@
 package com.devandy.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,11 @@ public class QnaServiceImpl implements QnaService{
 		
 		User sessionedUser = HttpSessionUtils.getUserFromSession(session);
 		
-		Question question = new Question(sessionedUser.getId(), sessionedUser.getName(), title, contents);
+		// 날짜 생성
+		Date createdDate = new Date();
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Question question = new Question(sessionedUser.getId(), sessionedUser.getName(), date.format(createdDate), title, contents);
 		
 		qnaRepository.save(question);
 	}
