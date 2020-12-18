@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.devandy.domain.Question;
-import com.devandy.domain.QnaRepository;
-import com.devandy.domain.User;
 import com.devandy.service.QnaService;
 import com.devandy.util.HttpSessionUtils;
 
