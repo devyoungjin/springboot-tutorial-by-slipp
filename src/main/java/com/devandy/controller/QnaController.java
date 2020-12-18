@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devandy.domain.Question;
-import com.devandy.domain.QuestionsRepository;
+import com.devandy.domain.QnaRepository;
 import com.devandy.domain.User;
+import com.devandy.service.QnaService;
 import com.devandy.util.HttpSessionUtils;
 
 @Controller
@@ -19,7 +20,10 @@ import com.devandy.util.HttpSessionUtils;
 public class QnaController {
 	
 	@Autowired
-	private QuestionsRepository questionRepository;
+	private QnaRepository qnaRepository;
+	
+	@Autowired
+	private QnaService qnaService;
 	
 	@GetMapping("/list")
 	public String list() {
@@ -45,9 +49,7 @@ public class QnaController {
 			return "/user/login";
 		}
 		
-		User sessionedUser = HttpSessionUtils.getUserFromSession(session);
-		Question question = new Question(sessionedUser.getId(), sessionedUser.getName(), title, contents);
-		questionRepository.save(question);
+		qnaService.postQuestion(session, title, contents);
 		
 		return "redirect:/qna/list";
 	}
