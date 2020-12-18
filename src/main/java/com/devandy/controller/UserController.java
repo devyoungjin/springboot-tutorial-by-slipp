@@ -86,7 +86,7 @@ public class UserController {
 			return "redirect:/user/loginForm";
 		} else if(!HttpSessionUtils.getUserFromSession(session).matchId(id)){
 			System.out.println("자신의 정보만 수정할 수 있습니다.");
-			return "redirect:/user/list";
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
 		} else {
 			model.addAttribute("user", HttpSessionUtils.getUserFromSession(session));
 			return "/user/update";
