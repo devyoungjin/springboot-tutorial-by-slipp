@@ -40,16 +40,8 @@ public class UserController {
 	
 	@ResponseBody
 	@PostMapping(value="/emailChk")
-	public int emailCheck(@RequestBody String email) {
-		int result = 0;
-		
-		if(userRepository.findByEmail(email)==null) {
-			result = 1;
-		} else {
-			result = 0;
-		}
-		
-		return result;
+	public boolean emailCheck(@RequestBody String email) {
+		return userService.isExistEmail(email);
 	}
 	
 	@GetMapping("/list")

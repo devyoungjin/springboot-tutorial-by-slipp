@@ -14,4 +14,6 @@ public interface UserService {
 	
 	public boolean checkAuthorizationForUpdate(HttpSession session, Long id);
 	
+	public boolean isExistEmail(String email);
+	
 }

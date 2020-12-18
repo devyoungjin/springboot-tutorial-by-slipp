@@ -65,4 +65,13 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public boolean isExistEmail(String email) {
+		if(userRepository.findByEmail(email)!=null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

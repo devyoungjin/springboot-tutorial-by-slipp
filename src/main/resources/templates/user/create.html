@@ -50,10 +50,10 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
                 success: function(data){
-                    if(data===1){
+                    if(data){
                     	availableSignup[0] = true;
                     	alert('가입가능한 이메일입니다.');
-                    } else if(data===0){
+                    } else {
                     	availableSignup[0] = false;
                         alert('이미 가입된 이메일입니다. 다른 이메일로 시도해주세요.');
                         document.getElementById('email').innerHTML = '';
