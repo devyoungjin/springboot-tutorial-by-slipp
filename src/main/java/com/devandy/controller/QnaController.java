@@ -28,7 +28,7 @@ public class QnaController {
 	@GetMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("question", qnaRepository.findAll());
-		return "/qna/list";
+		return "/";
 	}
 	
 	@GetMapping("/ask")
