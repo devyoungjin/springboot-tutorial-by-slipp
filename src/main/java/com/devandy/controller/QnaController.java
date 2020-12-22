@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.devandy.domain.Qna;
 import com.devandy.domain.QnaRepository;
 import com.devandy.service.QnaService;
 import com.devandy.util.HttpSessionUtils;
@@ -50,7 +52,14 @@ public class QnaController {
 		
 		qnaService.postQuestion(session, title, contents);
 		
-		return "redirect:/qna/list";
+		return "redirect:/";
+	}
+	
+	@GetMapping("/{id}")
+	public String showQna(@PathVariable Long id, Model model) {
+		Qna qna = qnaRepository.findById(id).get();
+		model.addAttribute("question", qna);
+		return "/qna/detail";
 	}
 	
 }
