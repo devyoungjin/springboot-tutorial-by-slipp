@@ -53,9 +53,4 @@ public class QnaController {
 		return "redirect:/qna/list";
 	}
 	
-	@GetMapping("/question")
-	public String questionPage() {
-		return "/qna/question";
-	}
-	
 }
