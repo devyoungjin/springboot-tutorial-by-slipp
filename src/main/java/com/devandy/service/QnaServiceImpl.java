@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devandy.domain.QnaRepository;
-import com.devandy.domain.Question;
+import com.devandy.domain.Qna;
 import com.devandy.domain.User;
 import com.devandy.util.HttpSessionUtils;
 
@@ -28,7 +28,7 @@ public class QnaServiceImpl implements QnaService{
 		Date createdDate = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Question question = new Question(sessionedUser.getId(), sessionedUser.getName(), date.format(createdDate), title, contents);
+		Qna question = new Qna(sessionedUser.getId(), sessionedUser.getName(), date.format(createdDate), title, contents);
 		
 		qnaRepository.save(question);
 	}
