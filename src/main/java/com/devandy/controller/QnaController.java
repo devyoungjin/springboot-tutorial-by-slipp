@@ -25,12 +25,24 @@ public class QnaController {
 	@Autowired
 	private QnaRepository qnaRepository;
 	
+	/**
+	 * 게시글 목록 조회
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("question", qnaRepository.findAll());
 		return "/";
 	}
 	
+	/**
+	 * 게시글 작성 페이지 요청
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/ask")
 	public String qnaForm(HttpSession session, Model model) {
 		
@@ -43,6 +55,13 @@ public class QnaController {
 		}
 	}
 	
+	/**
+	 *  게시글 작성 
+	 * @param session
+	 * @param title
+	 * @param contents
+	 * @return
+	 */
 	@PostMapping("/post")
 	public String ask(HttpSession session, String title, String contents) {
 		
@@ -55,6 +74,12 @@ public class QnaController {
 		return "redirect:/";
 	}
 	
+	/**
+	 *  게시글 상세조회 요청
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/{id}")
 	public String showQna(@PathVariable Long id, Model model) {
 		Qna qna = qnaRepository.findById(id).get();
