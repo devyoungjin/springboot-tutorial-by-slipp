@@ -28,7 +28,11 @@ public class QnaServiceImpl implements QnaService{
 		Date createdDate = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Qna qna = new Qna(sessionedUser.getId(), sessionedUser, date.format(createdDate), title, contents);
+		Qna qna = new Qna();
+		qna.setAuthor(sessionedUser);
+		qna.setCreatedDate(date.format(createdDate));
+		qna.setTitle(title);
+		qna.setContents(contents);
 		
 		qnaRepository.save(qna);
 	
