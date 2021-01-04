@@ -1,1 +1,1 @@
-INSERT INTO USER(EMAIL, NAME, PASSWORD) VALUES('youngjin@oneplat.co', 'DevAndy', '*1234*');
+INSERT INTO USER(EMAIL, NAME, PASSWORD) VALUES('youngjin@google.com', 'DevAndy', '*1234*');
