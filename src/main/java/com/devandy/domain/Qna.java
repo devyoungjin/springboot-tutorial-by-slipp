@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,11 +21,12 @@ public class Qna {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long boardId;
 
-	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name="fk_qna_author"))
-	private User author;
+	private Long authorId;
+	
+	private String authorName;
 	
 	private String createdDate;
 	

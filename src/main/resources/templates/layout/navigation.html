@@ -58,7 +58,7 @@
                 <li><a href="/user/createForm" role="button">회원가입</a></li>
                 {{/sessionedUser}}
                 {{#sessionedUser}}
-                <li><a href="/user/updateForm/{{id}}" role="button">정보수정</a></li>
+                <li><a href="/user/updateForm/{{userId}}" role="button">정보수정</a></li>
                 <li><a href="/user/logout" role="button">로그아웃</a></li>
                 {{/sessionedUser}}
             </ul>

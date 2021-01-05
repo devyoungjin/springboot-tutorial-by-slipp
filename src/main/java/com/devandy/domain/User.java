@@ -17,7 +17,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long userId;
 	
 	@Column(nullable=false, unique=true)
 	private String email;
@@ -28,8 +28,8 @@ public class User {
 	@Column(nullable=false)
 	private String password;
 	
-	public boolean matchId(Long id) {
-		return this.id.equals(id);
+	public boolean matchId(Long userId) {
+		return this.userId.equals(userId);
 	}
 	
 	public boolean matchPassword(String password) {
