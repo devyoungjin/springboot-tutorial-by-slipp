@@ -18,13 +18,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveUserAfterCreated(User user) {
 		userRepository.save(user);
-		System.out.println(user.toString());
 	}
 	
 	@Override
-	public void saveUserAfterUpdate(User updatedUser) {
-		User user = userRepository.findByEmail(updatedUser.getEmail());
-		System.out.println("***** Before update : "+user.toString());
+	public void saveUserAfterUpdate(Long userId, User updatedUser) {
+		User user = userRepository.findById(userId).get();
 		
 		// 비밀번호 없으면 이전 비밀번호 그대로 사용
 		if(updatedUser.getPassword()==null || updatedUser.getPassword()=="") {
@@ -33,8 +31,6 @@ public class UserServiceImpl implements UserService {
 		
 		user.update(updatedUser);
 		userRepository.save(user);
-		
-		System.out.println("***** After update : "+user.toString());
 	}
 	
 	@Override
@@ -53,11 +49,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean checkAuthorizationForUpdate(HttpSession session, Long id) {
+	public boolean checkAuthorizationForUpdate(Long userId, HttpSession session) {
 		if(!HttpSessionUtils.isLoginUser(session)) {
 			System.out.println("***** You must be logged in.");
 			return false;
-		} else if(!HttpSessionUtils.getUserFromSession(session).matchId(id)){
+		} else if(!HttpSessionUtils.getUserFromSession(session).matchId(userId)){
 			System.out.println("***** 자신의 정보만 수정할 수 있습니다.");
 			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
 		} else {
