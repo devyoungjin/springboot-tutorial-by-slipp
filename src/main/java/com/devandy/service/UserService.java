@@ -8,11 +8,11 @@ public interface UserService {
 
 	public void saveUserAfterCreated(User user);
 	
-	public void saveUserAfterUpdate(User user);
+	public void saveUserAfterUpdate(Long userId, User user);
 	
 	public boolean validationLogin(String email, String password);
 	
-	public boolean checkAuthorizationForUpdate(HttpSession session, Long id);
+	public boolean checkAuthorizationForUpdate(Long id, HttpSession session);
 	
 	public boolean isExistEmail(String email);
 	

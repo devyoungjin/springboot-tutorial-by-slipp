@@ -70,7 +70,7 @@ public class UserController {
 	@GetMapping("/updateForm/{userId}")
 	public String updateForm(@PathVariable Long userId, Model model, HttpSession session) {
 		
-		if(userService.checkAuthorizationForUpdate(session, userId)) {
+		if(userService.checkAuthorizationForUpdate(userId, session)) {
 			model.addAttribute("user", HttpSessionUtils.getUserFromSession(session));
 			return "user/update";
 		} else {
@@ -80,7 +80,7 @@ public class UserController {
 	
 	@PostMapping("/update/{userId}")
 	public String update(@PathVariable Long userId, User updatedUser) {
-		userService.saveUserAfterUpdate(updatedUser);
+		userService.saveUserAfterUpdate(userId, updatedUser);
 		return "redirect:/user/list";
 	}
 	
