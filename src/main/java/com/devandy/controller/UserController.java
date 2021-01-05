@@ -69,9 +69,9 @@ public class UserController {
 	
 	@GetMapping("/updateForm/{userId}")
 	public String updateForm(@PathVariable Long userId, Model model, HttpSession session) {
-		
-		if(userService.checkAuthorizationForUpdate(userId, session)) {
-			model.addAttribute("user", HttpSessionUtils.getUserFromSession(session));
+		if(HttpSessionUtils.isLoginUser(session)
+				&& userService.checkAuthorizationForUpdate(userId, session)) {
+			model.addAttribute("user", userRepository.findById(userId).get());
 			return "user/update";
 		} else {
 			return "redirect:/user/loginForm";
