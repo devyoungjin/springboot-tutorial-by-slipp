@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devandy.domain.Qna;
 import com.devandy.domain.QnaRepository;
+import com.devandy.domain.User;
+import com.devandy.domain.UserRepository;
 import com.devandy.service.QnaService;
 import com.devandy.util.HttpSessionUtils;
 
@@ -21,6 +23,9 @@ public class QnaController {
 	
 	@Autowired
 	private QnaService qnaService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private QnaRepository qnaRepository;
@@ -80,11 +85,63 @@ public class QnaController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/{id}")
-	public String showQna(@PathVariable Long id, Model model) {
-		Qna qna = qnaRepository.findById(id).get();
+	@GetMapping("/{boardId}")
+	public String showQna(@PathVariable Long boardId, Model model) {
+		Qna qna = qnaRepository.findById(boardId).get();
 		model.addAttribute("question", qna);
 		return "/qna/detail";
+	}
+	
+	/**
+	 *  게시글 수정 요청
+	 * @param id
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/{boardId}/update")
+	public String updateQnaForm(@PathVariable Long boardId, HttpSession session, Model model) {
+		Qna qna = qnaRepository.findById(boardId).get();
+		if(qnaService.validationAuthorization(session, qna)) {
+			User author = userRepository.findById(qna.getAuthorId()).get();
+			
+			model.addAttribute("user",author);
+			model.addAttribute("question", qna);
+			return "/qna/update";
+		} else {
+			return "/user/login";
+		}
+	}
+	
+	/**
+	 * 게시글 수정
+	 * @param session
+	 * @param title
+	 * @param contents
+	 * @return
+	 */
+	@PostMapping("/{boardId}/afterUpdate")
+	public String updateQna(@PathVariable Long boardId, HttpSession session, String title, String contents) {
+		qnaService.updateQuestion(boardId, session, title, contents);
+		return "redirect:/";
+	}
+	
+	/**
+	 * 게시글 삭제
+	 * @param boardId
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/{boardId}/delete")
+	public String deleteQna(@PathVariable Long boardId, HttpSession session) {
+		
+		Qna qna = qnaRepository.findById(boardId).get();
+		
+		if(qnaService.validationAuthorization(session, qna)) {
+			qnaRepository.delete(qna);
+			return "redirect:/";
+		} else {
+			return "/user/login";
+		}
 	}
 	
 }
